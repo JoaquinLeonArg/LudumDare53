@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DynamicFonts/ChatListItemName.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/Components/ChatGif.cs" type="Script" id=2]
+
+[node name="ChatGif" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -872.0
+margin_bottom = -651.0
+script = ExtResource( 2 )
+
+[node name="NameLeft" type="RichTextLabel" parent="."]
+margin_right = 1640.0
+margin_bottom = 260.0
+rect_scale = Vector2( 0.1, 0.1 )
+custom_colors/default_color = Color( 0.282353, 0.133333, 0.329412, 1 )
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Other"
+text = "Other"
+scroll_active = false
+
+[node name="NameRight" type="RichTextLabel" parent="."]
+margin_left = 244.0
+margin_right = 1884.0
+margin_bottom = 260.0
+rect_scale = Vector2( 0.1, 0.1 )
+custom_colors/default_color = Color( 0.282353, 0.133333, 0.329412, 1 )
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[right]You![/right]"
+text = "You!"
+scroll_active = false
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 200, 96 )

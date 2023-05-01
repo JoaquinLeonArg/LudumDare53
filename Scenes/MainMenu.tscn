@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/Image/Untitled-1.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Music/test.mp3" type="AudioStream" id=4]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 1
+color = Color( 0.168627, 0.121569, 0.301961, 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 640, 224 )
+texture = ExtResource( 3 )
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+autoplay = true

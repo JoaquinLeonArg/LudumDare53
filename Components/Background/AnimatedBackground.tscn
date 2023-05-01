@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float battery : hint_range(0.0,1.0) = 0.9;
+uniform float anchor : hint_range(-1.0,1.0) = -0.5;
+uniform float speed_scale : hint_range(1.0, 10.0) = 0.06;
+uniform float fov : hint_range(0.01, 1.0) = 0.06;
+uniform vec4 background_color : hint_color = vec4(0.1, 0.0, 0.3, 1.0);
+uniform vec4 grid_color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+float grid(vec2 uv, float batt) {
+    vec2 size = vec2(uv.y, uv.y * uv.y * 0.2) * 0.01;
+    uv += vec2(TIME * speed_scale * (batt + 0.05), 0.0);
+    uv = abs(fract(uv) - 0.5);
+	//vec2 lines = size;
+ 	vec2 lines = smoothstep(size, vec2(0.0), uv);
+ 	//lines += smoothstep(size * 5.0, vec2(0.0), uv) * 0.1 * batt;
+	if (lines.x + lines.y > 0.5) {
+		return 1.0;
+	}
+	if (lines.x + lines.y > 0.25) {
+		return 0.25;
+	}
+	return 0.0;
+    //return clamp(lines.x + lines.y, 0.0, 1.0);
+}
+
+void fragment() {
+	vec2 uv = UV;
+	vec4 col = background_color;
+    uv.y = 5.0 / abs(uv.y + fov);
+	uv.x += anchor;
+    uv.x *= uv.y * 1.0;
+    float gridVal = grid(uv, battery);
+    col = mix(background_color, grid_color, gridVal);
+	COLOR = col;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/battery = 1.0
+shader_param/anchor = -0.5
+shader_param/speed_scale = 1.2
+shader_param/fov = 0.22
+shader_param/background_color = Color( 0.184314, 0.105882, 0.329412, 1 )
+shader_param/grid_color = Color( 0.141176, 0.254902, 0.807843, 1 )
+
+[node name="Control" type="ColorRect"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 480.0
