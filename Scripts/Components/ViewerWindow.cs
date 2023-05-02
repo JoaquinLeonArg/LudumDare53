@@ -5,14 +5,13 @@ public class ViewerWindow: BaseWindow {
 	private Control rightArrowNode;
 	private Sprite contentNode;
 	private RichTextLabel pageCountNode;
+	public string contentName;
 	public override void _Ready() {
 		GameManager.viewerWindow = this;
 		this.leftArrowNode = GetNode<Control>("LeftArrow");
 		this.rightArrowNode = GetNode<Control>("RightArrow");
 		this.contentNode = GetNode<Sprite>("Content");
 		this.pageCountNode = GetNode<RichTextLabel>("PageNumber");
-		this.SetContent(ResourceLoader.Load<Texture>("res://Resources/Image/example_pdf.png"));
-		this.UpdatePagination();
 		this.leftArrowNode.Connect("gui_input", this, nameof(HandleLeftArrow));
 		this.rightArrowNode.Connect("gui_input", this, nameof(HandleRightArrow));
 	}
@@ -22,6 +21,7 @@ public class ViewerWindow: BaseWindow {
 		this.contentNode.Texture = content;
 		this.contentNode.Hframes = contentPages;
 		this.contentNode.Frame = 0;
+		GetParent().MoveChild(this, GetParent().GetChildCount());
 	}
 
 	private void HandleLeftArrow(InputEvent inputEvent) {

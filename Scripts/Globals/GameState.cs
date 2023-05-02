@@ -4,7 +4,10 @@ using System.Linq;
 using System.Numerics;
 
 public enum GameFlags {
-    TestFlag
+    ListedDrones,
+    MovedDrone,
+    ListedLocations,
+    HQItems
 }
 
 public static class GameManager {
@@ -16,11 +19,15 @@ public static class GameManager {
     public static OrdersWindow ordersWindow;
 
     public static Timeline timeline;
+    public static int finalCountdown = 300;
 
     public static string playerName;
 
-    private static Dictionary<GameFlags, int> flags = new Dictionary<GameFlags, int> {
-        { GameFlags.TestFlag, 0 }
+    public static Dictionary<GameFlags, int> flags = new Dictionary<GameFlags, int> {
+        { GameFlags.ListedDrones, 0 },
+        { GameFlags.MovedDrone, 0 },
+        { GameFlags.ListedLocations, 0 },
+        { GameFlags.HQItems, 0 },
     };
     public static void DroneCommand(string command) {
         sshWindow.AddText("[color=gray]$ " + command + "[/color]\n");
@@ -31,7 +38,7 @@ public static class GameManager {
             HandleLocationsListCommand();
         } else if (commandStrings.Length == 2 && commandStrings[0] == "drone" && commandStrings[1] == "ls") { // drone ls
             HandleDroneListCommand();
-        } else if (commandStrings.Length == 3 && commandStrings[0] == "location" && commandStrings[1] == "items") { // location items <location>
+        } else if (commandStrings.Length == 3 && commandStrings[0] == "item" && commandStrings[1] == "ls") { // item ls <location>
             HandleLocationItemsCommand(commandStrings[2]);
         } else if (commandStrings.Length == 4 && commandStrings[0] == "drone" && commandStrings[1] == "pickup") { // drone pickup <drone> <item>
             HandlePickupItem(commandStrings[2], commandStrings[3]);
@@ -73,9 +80,11 @@ public static class GameManager {
             return;
         }
         drone.target = new Vector2(targetX, targetY);
+        if (flags[GameFlags.MovedDrone] == 0) { flags[GameFlags.MovedDrone] = 1; } // Flag
         sshWindow.AddText("Moving [color=green]" + droneName + "[/color] to (" + targetX + ", " + targetY + ")");
     }
     private static void HandleLocationsListCommand() {
+        if (flags[GameFlags.ListedLocations] == 0) { flags[GameFlags.ListedLocations] = 1; } // Flag
         sshWindow.AddText("List of available locations:\n");
         sshWindow.AddText("\t[color=yellow]" + "Name".PadRight(16) + "X".PadRight(3) + "Y".PadRight(3) + "[/color]");
         foreach (var location in BuildingManager.GetBuildings()) {
@@ -86,16 +95,21 @@ public static class GameManager {
         }
     }
     private static void HandleDroneListCommand() {
+        if (flags[GameFlags.ListedDrones] == 0) { flags[GameFlags.ListedDrones] = 1; } // Flag
         sshWindow.AddText("List of available drones:\n");
-        sshWindow.AddText("\t[color=yellow]" + "Name".PadRight(16) + "X".PadRight(3) + "Y".PadRight(3) + "[/color]");
+        sshWindow.AddText("\t[color=yellow]" + "Name".PadRight(16) + "X".PadRight(3) + "Y".PadRight(3) + "Item".PadRight(12) + "MaxWeight".PadRight(11) + "Speed".PadRight(7) + "[/color]");
         foreach (var drone in DroneManager.GetDrones()) {
             var namePadded = drone.name.ToString().PadRight(16);
-            var xPadded = drone.position.X.ToString().PadRight(3);
-            var yPadded = drone.position.Y.ToString().PadRight(3);
-            sshWindow.AddText("\n\t" + namePadded + xPadded + yPadded);
+            var xPadded = ((int)drone.position.X).ToString().PadRight(3);
+            var yPadded = ((int)drone.position.Y).ToString().PadRight(3);
+            var itemPadded = drone.item != null ? drone.item.name.ToString().PadRight(12) : "FREE".PadRight(12);
+            var maxWeightPadded = ((int)drone.maxWeight).ToString().PadRight(11);
+            var speedPadded = ((int)drone.speed * 1000).ToString().PadRight(7);
+            sshWindow.AddText("\n\t" + namePadded + xPadded + yPadded + itemPadded + maxWeightPadded + speedPadded);
         }
     }
     private static void HandleLocationItemsCommand(string locationName) {
+        if (locationName == "hq") { flags[GameFlags.HQItems] = 1; } // Flag
         var location = BuildingManager.GetBuilding(locationName);
         if (location == null) {
             sshWindow.AddText(MakeErrorResponse("Location '" + locationName + "' not found."));
@@ -129,6 +143,10 @@ public static class GameManager {
             sshWindow.AddText(MakeErrorResponse("Location '" + droneLocation.name + "' does not contain item '" + itemName + "'."));
             return;
         }
+        if (item.weight > drone.maxWeight) {
+            sshWindow.AddText(MakeErrorResponse("Drone '" + droneName + "' cannot carry item '" + itemName + "' because it's too heavy. Use another drone with a higher weight capacity."));
+            return;
+        }
         drone.item = item;
         sshWindow.AddText("Picked up [color=green]" + item.name + "[/color] with drone [color=green]" + droneName + "[/color] at [color=green]" + droneLocation.name + "[/color].");
     }
@@ -156,9 +174,9 @@ public static class GameManager {
 
 public static class DroneManager {
     private static Dictionary<string, Drone> drones = new Dictionary<string, Drone>();
-    public static void AddDrone(Drone drone) {
+    public static void AddDrone(Drone drone, string iconName) {
         drones.Add(drone.name, drone);
-        GameManager.mapWindow.AddDroneToMap(drone, "eagle");
+        GameManager.mapWindow.AddDroneToMap(drone, iconName);
     }
     public static Drone GetDrone(string droneName) {
         if (drones.ContainsKey(droneName)) { return drones[droneName]; }
@@ -167,24 +185,32 @@ public static class DroneManager {
     public static Drone[] GetDrones() {
         return drones.Values.ToArray();
     }
+    public static void Update() {
+        foreach (var drone in drones.Values) {
+            drone.Update();
+        }
+    }
 }
 
 public class Drone {
     public string name;
-    public float speed = 0.1f;
+    public float speed;
+    public int maxWeight;
     public Item item;
     public Vector2 position;
     public Vector2 target = Vector2.Zero;
-    public Drone(string name, Vector2 position) {
+    public Drone(string name, Vector2 position, float speed, int maxWeight) {
         this.name = name;
         this.position = position;
+        this.speed = speed;
+        this.maxWeight = maxWeight;
     }
     public void Update() {
         if (this.target == Vector2.Zero) { return; }
         if (this.target.X != this.position.X) { this.position.X += Math.Sign(this.target.X - this.position.X) * this.speed; }
-        if (this.target.Y != this.position.Y) { this.position.Y += Math.Sign(this.target.X - this.position.X) * this.speed; }
-        if (Math.Abs(this.target.X - this.position.X) < this.speed * 2) { this.position.X = this.target.X; }
-        if (Math.Abs(this.target.Y - this.position.Y) < this.speed * 2) { this.position.Y = this.target.Y; }
+        if (this.target.Y != this.position.Y) { this.position.Y += Math.Sign(this.target.Y - this.position.Y) * this.speed; }
+        if (Math.Abs(this.target.X - this.position.X) < this.speed * 5) { this.position.X = this.target.X; }
+        if (Math.Abs(this.target.Y - this.position.Y) < this.speed * 5) { this.position.Y = this.target.Y; }
         if (this.position == this.target) { this.target = Vector2.Zero; }
     }
     public bool IsFree() {
@@ -197,9 +223,9 @@ public class Drone {
 
 public static class BuildingManager {
     private static Dictionary<string, Building> buildings = new Dictionary<string, Building>();
-    public static void AddBuilding(Building building) {
+    public static void AddBuilding(Building building, string iconName) {
         buildings.Add(building.name, building);
-        GameManager.mapWindow.AddBuildiingToMap(building, "factory");
+        GameManager.mapWindow.AddBuildiingToMap(building, iconName);
     }
     public static Building GetBuilding(string buildingName) {
         if (buildings.ContainsKey(buildingName)) { return buildings[buildingName]; }

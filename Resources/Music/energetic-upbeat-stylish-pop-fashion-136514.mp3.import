@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/energetic-upbeat-stylish-pop-fashion-136514.mp3-f9de1425b1cb3f647e15992f23560ba1.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/energetic-upbeat-stylish-pop-fashion-136514.mp3"
+dest_files=[ "res://.import/energetic-upbeat-stylish-pop-fashion-136514.mp3-f9de1425b1cb3f647e15992f23560ba1.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

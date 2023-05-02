@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DynamicFonts/OrderNumber.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/Components/CountDown.cs" type="Script" id=2]
+
+[node name="CountDown" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1080.0
+margin_bottom = -640.0
+mouse_filter = 2
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 0.290196, 0.654902, 1 )
+
+[node name="Time" type="RichTextLabel" parent="."]
+margin_right = 2000.0
+margin_bottom = 800.0
+rect_scale = Vector2( 0.1, 0.1 )
+mouse_filter = 2
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]300[/center]"
+text = "300"

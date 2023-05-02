@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/street-food-112193.mp3-627f7c868e1c4d239d253fbb5b741b5a.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/street-food-112193.mp3"
+dest_files=[ "res://.import/street-food-112193.mp3-627f7c868e1c4d239d253fbb5b741b5a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

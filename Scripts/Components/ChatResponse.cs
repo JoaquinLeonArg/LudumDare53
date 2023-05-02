@@ -4,6 +4,8 @@ public class ChatResponse: Control {
     [Export]
     public int chatIndex;
 
+    private bool enabled;
+
     private Control responseANode;
     private Control responseBNode;
     private Control responseCNode;
@@ -31,9 +33,11 @@ public class ChatResponse: Control {
         this.responseCNode.Connect("gui_input", this, nameof(HandleInputC));
         this.responseCNode.Connect("mouse_entered", this, nameof(HandleMouseEnteredC));
         this.responseCNode.Connect("mouse_exited", this, nameof(HandleMouseExitedC));
+
+        CallDeferred(nameof(UpdatePosition));
     }
     public override void _Process(float delta) {
-        if (GameManager.chatWindow.activeChat == this.chatIndex) { this.Visible = true; } else { this.Visible = false; }
+        UpdatePosition();
         if (this.hoveringA) {
             this.responseANode.Modulate = new Color("ff9999");
         } else {
@@ -50,8 +54,12 @@ public class ChatResponse: Control {
             this.responseCNode.Modulate = new Color("ffffff");
         }
     }
+    private void UpdatePosition() {
+        if (GameManager.chatWindow.activeChat == this.chatIndex && this.enabled) { this.Visible = true; } else { this.Visible = false; }
+    }
     public void SetResponses(string responseA, string responseB, string responseC) {
         this.Visible = true;
+        this.enabled = true;
         this.responseA = responseA;
         this.responseB = responseB;
         this.responseC = responseC;
@@ -95,6 +103,7 @@ public class ChatResponse: Control {
                 GameManager.chatWindow.GetChat((ChatConversation)this.chatIndex).AddChatMessage(ChatMessageSide.Right, "You", this.responseA, null);
                 GameManager.chatWindow.GetChat((ChatConversation)this.chatIndex).SetLastResponse(1);
                 this.Visible = false;
+                this.enabled = false;
             }
         }
     }
@@ -105,6 +114,7 @@ public class ChatResponse: Control {
                 GameManager.chatWindow.GetChat((ChatConversation)this.chatIndex).AddChatMessage(ChatMessageSide.Right, "You", this.responseB, null);
                 GameManager.chatWindow.GetChat((ChatConversation)this.chatIndex).SetLastResponse(2);
                 this.Visible = false;
+                this.enabled = false;
             }
         }
     }
@@ -115,6 +125,7 @@ public class ChatResponse: Control {
                 GameManager.chatWindow.GetChat((ChatConversation)this.chatIndex).AddChatMessage(ChatMessageSide.Right, "You", this.responseC, null);
                 GameManager.chatWindow.GetChat((ChatConversation)this.chatIndex).SetLastResponse(3);
                 this.Visible = false;
+                this.enabled = false;
             }
         }
     }

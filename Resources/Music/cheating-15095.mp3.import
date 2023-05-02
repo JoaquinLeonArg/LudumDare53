@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/cheating-15095.mp3-f230eed7ac2bccf785bc11ca4d41c24b.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/cheating-15095.mp3"
+dest_files=[ "res://.import/cheating-15095.mp3-f230eed7ac2bccf785bc11ca4d41c24b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

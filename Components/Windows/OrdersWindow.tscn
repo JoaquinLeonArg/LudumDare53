@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Image/orders_window.png" type="Texture" id=1]
 [ext_resource path="res://Components/WindowParts/DragArea.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://DynamicFonts/WindowTitle.tres" type="DynamicFont" id=4]
 [ext_resource path="res://DynamicFonts/OrderDescription.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Components/WindowParts/CloseArea.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/SFX/delivery-ready.wav" type="AudioStream" id=7]
+[ext_resource path="res://Resources/SFX/alert-new-delivery.wav" type="AudioStream" id=8]
 
 [node name="OrdersWindow" type="Control"]
 anchor_right = 1.0
@@ -68,3 +70,9 @@ margin_left = 10.0
 margin_top = 50.0
 margin_right = -10.0
 margin_bottom = -13.0
+
+[node name="NewSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="DoneSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )

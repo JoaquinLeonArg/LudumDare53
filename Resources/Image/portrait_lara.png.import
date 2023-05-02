@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/portrait_lara.png-9b6a17b1a2e89f88491cf1ed1bb6319b.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Resources/Image/portrait_lara.png"
+dest_files=[ "res://.import/portrait_lara.png-9b6a17b1a2e89f88491cf1ed1bb6319b.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

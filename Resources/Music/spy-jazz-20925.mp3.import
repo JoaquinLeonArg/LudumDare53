@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spy-jazz-20925.mp3-a371b82fcd2911ed1282aab683126581.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/spy-jazz-20925.mp3"
+dest_files=[ "res://.import/spy-jazz-20925.mp3-a371b82fcd2911ed1282aab683126581.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/sleepy-cat-118974.mp3-af6757439551293632286ab9f8c88123.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/sleepy-cat-118974.mp3"
+dest_files=[ "res://.import/sleepy-cat-118974.mp3-af6757439551293632286ab9f8c88123.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

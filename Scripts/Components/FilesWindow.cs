@@ -15,7 +15,6 @@ public class FilesWindow: BaseWindow {
 	override public void _Ready() {
 		GameManager.filesWindow = this;
 		this.filesNode = GetNode<Control>("Files");
-		Test();
 	}
 
 	public override void _Process(float delta) {
@@ -27,16 +26,11 @@ public class FilesWindow: BaseWindow {
 		}
 	}
 
-	public void AddPdfFile(string fileName, FileType fileType) {
+	public void AddPdfFile(string fileName, Texture texture) {
 		var icon = fileIconScene.Instance<FileIcon>();
 		this.filesNode.AddChild(icon);
-		icon.SetData(fileName, fileType);
+		icon.SetData(fileName, FileType.Pdf, texture);
 		fileIcons.Add(fileName, icon);
 	}
 
-	private void Test() {
-		for (var i = 0; i < 18; i++) {
-			this.AddPdfFile("test_file" + i, FileType.Pdf);
-		}
-	}
 }

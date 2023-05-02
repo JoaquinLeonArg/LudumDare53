@@ -49,4 +49,10 @@ public class Icon: Control {
             }
         }
     }
+    public void ShowIcon() {
+        this.Visible = true;
+        this.RectScale = new Vector2(0, 0);
+        var tween = CreateTween();
+        tween.TweenProperty(this, "rect_scale", new Vector2(1, 1), 0.25f).SetTrans(Tween.TransitionType.Bounce);
+    }
 }

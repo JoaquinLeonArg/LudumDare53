@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lofi-rhodes-for-introoutro-0132-12949.mp3-c59607094331975c4a67d58ac0f9bf96.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/lofi-rhodes-for-introoutro-0132-12949.mp3"
+dest_files=[ "res://.import/lofi-rhodes-for-introoutro-0132-12949.mp3-c59607094331975c4a67d58ac0f9bf96.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

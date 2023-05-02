@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/chill-lofi-song-8444.mp3-ddec56686f485c1432be61fe34ef599d.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/chill-lofi-song-8444.mp3"
+dest_files=[ "res://.import/chill-lofi-song-8444.mp3-ddec56686f485c1432be61fe34ef599d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -7,25 +7,23 @@ public class OrdersWindow: BaseWindow {
 	private Control ordersNode;
 	private RichTextLabel emptyNode;
 
+	private int orderCount;
+
 	private List<Order> orders = new List<Order>();
 	public override void _Ready() {
 		GameManager.ordersWindow = this;
 		this.ordersNode = GetNode<Control>("Orders");
 		this.emptyNode = GetNode<RichTextLabel>("NoOrders");
-		Test();
-	}
-
-	private void Test() {
-		this.AddOrder("Factory", new string[] { "Mate", "Pepe" });
-		this.AddOrder("Factory", new string[] { "Pupu", "OtroItemAca" });
 	}
 
 	public void AddOrder(string destination, string[] itemNames) {
+		GetNode<AudioStreamPlayer>("NewSound").Play();
+		this.orderCount++;
 		var order = orderScene.Instance<Order>();
 		order.SetSize(new Vector2(380, 172));
 		this.ordersNode.AddChild(order);
 		this.orders.Add(order);
-		order.SetData(destination, itemNames);
+		order.SetData(destination, itemNames, orderCount);
 		this.UpdateLayout();
 	}
 
@@ -35,5 +33,11 @@ public class OrdersWindow: BaseWindow {
 		for (var i = 0; i < this.ordersNode.GetChildCount(); i++) {
 			this.ordersNode.GetChild<Order>(i).SetPosition(new Vector2(8, i * 176));
 		}
+	}
+	public List<Order> GetOrders() {
+		return this.orders;
+	}
+	public void ClearOrder(Order order) {
+		this.orders.Remove(order);
 	}
 }

@@ -12,10 +12,11 @@ public class Order: Control {
     public override void _Ready() {
         this.orderItemsNode = GetNode<Control>("Items");
     }
-    public void SetData(string destinationName, string[] itemNames) {
+    public void SetData(string destinationName, string[] itemNames, int number) {
         this.destination = BuildingManager.GetBuilding(destinationName);
         this.itemNames = itemNames.ToList();
         this.GetNode<RichTextLabel>("Destination").BbcodeText = "[center]" + destinationName + "[/center]";
+        this.GetNode<RichTextLabel>("OrderNumber").BbcodeText = "[center]" + number + "[/center]";
         for (var i = 0; i < itemNames.Length; i++) {
             var itemName = itemNames[i];
             var orderItem = this.orderItemsNode.GetChild<OrderItem>(i);
@@ -36,6 +37,10 @@ public class Order: Control {
                 }
             }
         }
-        if (completedItems.All(item => item == true)) { this.QueueFree(); } // TODO: Animate or something?
+        if (completedItems.All(item => item == true)) {
+            GameManager.ordersWindow.ClearOrder(this);
+            this.GetParent().GetParent().GetNode<AudioStreamPlayer>("DoneSound").Play();
+            this.QueueFree();
+        } // TODO: Animate or something?
     }
 }

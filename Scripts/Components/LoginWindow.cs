@@ -17,6 +17,14 @@ public class LoginWindow: BaseWindow {
 		this.buttonNode.Connect("mouse_exited", this, nameof(HandleMouseExited));
 		this.buttonNode.Connect("gui_input", this, nameof(HandleClick));
 	}
+
+	public override void _Input(InputEvent inputEvent) {
+		if (inputEvent is InputEventKey buttonEvent) {
+			if (buttonEvent.IsActionPressed("ui_accept")) {
+				CheckCreds();
+			}
+		}
+	}
 	public override void _Process(float delta) {
 		if (this.hovering) {
 			this.buttonNode.Modulate = new Color("ff9999");
@@ -34,29 +42,33 @@ public class LoginWindow: BaseWindow {
 		if (inputEvent == null) { return; }
 		if (inputEvent is InputEventMouseButton buttonEvent) {
 			if (buttonEvent.IsActionPressed("mouse_left") && this.hovering && !this.done) {
-				if (usernameNode.Text.Length < 2) {
-					this.errorNode.BbcodeText = "[center]Username is too short.[/center]";
-					return;
-				}
-				if (!Regex.IsMatch(usernameNode.Text, "^[a-zA-Z0-9]+$")) {
-					this.errorNode.BbcodeText = "[center]Username contains invalid characters.[/center]";
-					return;
-				}
-				if (passwordNode.Text != "password123") {
-					this.errorNode.BbcodeText = "[center]Wrong password.[/center]";
-					return;
-				}
-				this.done = true;
-				GameManager.playerName = usernameNode.Text;
-				this.Close();
-				var tween = CreateTween();
-				tween.SetParallel(false);
-				tween.TweenProperty(GetTree().CurrentScene.GetNode("StickyNote"), "modulate:a", 0.0f, 0.5f);
-				tween.TweenCallback(GetTree().CurrentScene.GetNode("StickyNote"), "queue_free");
-				tween.TweenProperty(this.GetParent(), "modulate:a", 0.0f, 0.5f);
-				tween.TweenCallback(this.GetParent(), "queue_free");
-				GameManager.timeline.Start();
+				CheckCreds();
 			}
 		}
+	}
+	private void CheckCreds() {
+		if (usernameNode.Text.Length < 2) {
+			this.errorNode.BbcodeText = "[center]Username is too short.[/center]";
+			return;
+		}
+		if (!Regex.IsMatch(usernameNode.Text, "^[a-zA-Z0-9]+$")) {
+			this.errorNode.BbcodeText = "[center]Username contains invalid characters.[/center]";
+			return;
+		}
+		if (passwordNode.Text != "password123") {
+			this.errorNode.BbcodeText = "[center]Wrong password.[/center]";
+			return;
+		}
+		this.done = true;
+		GameManager.playerName = usernameNode.Text;
+		GetTree().CurrentScene.GetNode<AudioStreamPlayer>("PowerSound").Play();
+		this.Close();
+		var tween = CreateTween();
+		tween.SetParallel(false);
+		tween.TweenProperty(GetTree().CurrentScene.GetNode("StickyNote"), "modulate:a", 0.0f, 0.5f);
+		tween.TweenCallback(GetTree().CurrentScene.GetNode("StickyNote"), "queue_free");
+		tween.TweenProperty(this.GetParent(), "modulate:a", 0.0f, 0.5f);
+		tween.TweenCallback(this.GetParent(), "queue_free");
+		GameManager.timeline.Start();
 	}
 }

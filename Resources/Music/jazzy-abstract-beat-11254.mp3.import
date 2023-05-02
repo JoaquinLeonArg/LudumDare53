@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/jazzy-abstract-beat-11254.mp3-a36c206394bcf6b86b912baef52060f9.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/jazzy-abstract-beat-11254.mp3"
+dest_files=[ "res://.import/jazzy-abstract-beat-11254.mp3-a36c206394bcf6b86b912baef52060f9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

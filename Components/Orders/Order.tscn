@@ -45,10 +45,10 @@ text = "Order"
 scroll_active = false
 
 [node name="Destination" type="RichTextLabel" parent="."]
-margin_left = 46.0
-margin_top = 134.0
-margin_right = 1176.0
-margin_bottom = 314.0
+margin_left = 49.0
+margin_top = 125.0
+margin_right = 1149.0
+margin_bottom = 485.0
 rect_scale = Vector2( 0.1, 0.1 )
 custom_colors/default_color = Color( 0.282353, 0.133333, 0.329412, 1 )
 custom_fonts/normal_font = ExtResource( 4 )

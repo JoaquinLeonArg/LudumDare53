@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/sunset-vibes-lo-fichillhop-9503.mp3-0da624289c6976ae18f1ac7f6268bbae.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/sunset-vibes-lo-fichillhop-9503.mp3"
+dest_files=[ "res://.import/sunset-vibes-lo-fichillhop-9503.mp3-0da624289c6976ae18f1ac7f6268bbae.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

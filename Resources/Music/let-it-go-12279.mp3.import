@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/let-it-go-12279.mp3-3329bf10085819f1e8e71ddea63b83fa.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/let-it-go-12279.mp3"
+dest_files=[ "res://.import/let-it-go-12279.mp3-3329bf10085819f1e8e71ddea63b83fa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -11,6 +11,8 @@ public class FileIcon: Control {
     private BaseWindow windowNode;
     private int doubleClickTimer;
     private bool selected;
+    private Texture texture;
+    private string fileName;
     public override void _Ready() {
         this.iconNode = GetNode<Sprite>("Icon");
         this.nameNode = GetNode<RichTextLabel>("Name");
@@ -18,9 +20,11 @@ public class FileIcon: Control {
         this.RectSize = new Vector2(88, 120); // Godot why
         Connect("gui_input", this, nameof(HandleGuiInput));
     }
-    public void SetData(string fileName, FileType fileType) {
+    public void SetData(string fileName, FileType fileType, Texture texture) {
+        this.fileName = fileName;
         this.iconNode.Texture = this.fileIconTextures[fileType];
         this.nameNode.BbcodeText = "[center]" + fileName + "[/center]";
+        this.texture = texture;
     }
     public override void _Process(float delta) {
         if (this.doubleClickTimer > 0) { this.doubleClickTimer -= 1; }
@@ -31,7 +35,11 @@ public class FileIcon: Control {
         if (inputEvent is InputEventMouseButton buttonEvent) {
             if (buttonEvent.IsActionPressed("mouse_left") && this.doubleClickTimer > 0) { // Double click
                 this.selected = false;
-                if (!GameManager.viewerWindow.Visible) { GameManager.viewerWindow.Visible = true; }
+                if (!GameManager.viewerWindow.Visible) {
+                    GameManager.viewerWindow.SetContent(this.texture);
+                    GameManager.viewerWindow.contentName = this.fileName;
+                    GameManager.viewerWindow.Open(GameManager.viewerWindow.RectGlobalPosition);
+                }
                 this.doubleClickTimer = 0;
             }
             if (buttonEvent.IsActionPressed("mouse_left") && this.doubleClickTimer == 0) { // First click

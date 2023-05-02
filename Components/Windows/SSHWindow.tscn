@@ -82,7 +82,7 @@ rect_clip_content = false
 mouse_filter = 2
 custom_colors/default_color = Color( 0.282353, 0.133333, 0.329412, 1 )
 custom_fonts/normal_font = ExtResource( 4 )
-text = "Dronetrol"
+text = "DroneMgr"
 
 [node name="LineEdit" type="LineEdit" parent="."]
 margin_left = 39.0

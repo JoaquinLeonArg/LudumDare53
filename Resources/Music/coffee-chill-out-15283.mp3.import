@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/coffee-chill-out-15283.mp3-49fed930669180412efc6d6b1a96281f.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/coffee-chill-out-15283.mp3"
+dest_files=[ "res://.import/coffee-chill-out-15283.mp3-49fed930669180412efc6d6b1a96281f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

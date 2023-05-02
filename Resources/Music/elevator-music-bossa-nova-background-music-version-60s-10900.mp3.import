@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/elevator-music-bossa-nova-background-music-version-60s-10900.mp3-f2b1297ffa87a6d646b8bfdac3ed3902.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/elevator-music-bossa-nova-background-music-version-60s-10900.mp3"
+dest_files=[ "res://.import/elevator-music-bossa-nova-background-music-version-60s-10900.mp3-f2b1297ffa87a6d646b8bfdac3ed3902.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

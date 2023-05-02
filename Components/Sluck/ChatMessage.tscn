@@ -1,15 +1,15 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://DynamicFonts/ChatListItemName.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/Components/ChatMessage.cs" type="Script" id=2]
-[ext_resource path="res://DynamicFonts/ChatListItemNameBold.tres" type="DynamicFont" id=3]
+[ext_resource path="res://DynamicFonts/ChatMessageBold.tres" type="DynamicFont" id=3]
+[ext_resource path="res://DynamicFonts/ChatMessage.tres" type="DynamicFont" id=4]
 
 [node name="ChatMessage" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -872.0
 margin_bottom = -651.0
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource( 2 )
 
 [node name="Background" type="ColorRect" parent="."]
@@ -17,7 +17,7 @@ margin_left = 16.0
 margin_top = 29.0
 margin_right = 391.0
 margin_bottom = 148.0
-mouse_filter = 1
+mouse_filter = 2
 color = Color( 0.415686, 0.0784314, 0.513726, 1 )
 
 [node name="NameLeft" type="RichTextLabel" parent="."]
@@ -25,9 +25,9 @@ margin_right = 1640.0
 margin_bottom = 260.0
 rect_scale = Vector2( 0.1, 0.1 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 2
 custom_colors/default_color = Color( 0.282353, 0.133333, 0.329412, 1 )
-custom_fonts/normal_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "Other"
 text = "Other"
@@ -39,9 +39,9 @@ margin_right = 1884.0
 margin_bottom = 260.0
 rect_scale = Vector2( 0.1, 0.1 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 2
 custom_colors/default_color = Color( 0.282353, 0.133333, 0.329412, 1 )
-custom_fonts/normal_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[right]You![/right]"
 text = "You!"
@@ -54,10 +54,10 @@ margin_right = 3624.0
 margin_bottom = 266.0
 rect_scale = Vector2( 0.1, 0.1 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 2
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_fonts/bold_font = ExtResource( 3 )
-custom_fonts/normal_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
 bbcode_text = "Testing"
 text = "Testing"

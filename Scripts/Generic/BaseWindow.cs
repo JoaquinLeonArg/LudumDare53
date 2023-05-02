@@ -51,6 +51,7 @@ public partial class BaseWindow: Control {
         tween.SetParallel(true);
         tween.TweenProperty(this, "rect_scale", new Vector2(1.0f, 1.0f), 0.2f).SetTrans(Tween.TransitionType.Quad);
         tween.TweenProperty(this, "rect_global_position", to, 0.2f).SetTrans(Tween.TransitionType.Quad);
+        GetParent().MoveChild(this, GetParent().GetChildCount());
     }
     public void Close() {
         var tween = CreateTween();
