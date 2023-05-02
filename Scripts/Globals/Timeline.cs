@@ -35,10 +35,6 @@ public class Timeline: Node {
     public async void Start() {
         CallDeferred(nameof(SetData));
 
-        var finalCountdown = GetTree().CurrentScene.GetNode<Control>("Overlays/CountDown");
-        var finalCountdownLabel = finalCountdown.GetNode<RichTextLabel>("Time");
-        var finalFx = GetTree().CurrentScene.GetNode<Control>("Overlays/FinalFx");
-
         // Boss intro
         await WaitFor(5);
         if (!GameManager.chatWindow.Visible) GameManager.chatWindow.Open(GameManager.chatWindow.RectGlobalPosition);
@@ -91,7 +87,7 @@ public class Timeline: Node {
         await WaitFor(3);
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "[b]DroneMap[/b] allows you to monitor the drones in real-time. Let's give you control of a drone now.", null);
         await WaitFor(2);
-        DroneManager.AddDrone(new Drone("eagle", new System.Numerics.Vector2(20, 30), 0.006f, 20), "eagle");
+        DroneManager.AddDrone(new Drone("eagle", new System.Numerics.Vector2(20, 30), 0.009f, 20), "eagle");
         await WaitFor(1);
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "I've added [b]eagle[/b] to your fleet. You should be able to see it on the map now.", null);
         laraChatResponse.SetResponses("I can see it.", "What?", null);
@@ -165,7 +161,7 @@ public class Timeline: Node {
             if (GameManager.flags[GameFlags.MovedDrone] == 1) break;
             await WaitFor(1);
             t++;
-            if (t == 10) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Try moving [b]eagle[/b] now. Something like [b]drone mv eagle 10 30[/b] should do it.", null); }
+            if (t == 5) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Try moving [b]eagle[/b] now. Something like [b]drone mv eagle 10 30[/b] should do it.", null); }
         }
         if (t == 0) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Fast learner, huh?", null); }
         await WaitFor(1);
@@ -195,9 +191,9 @@ public class Timeline: Node {
             if (DroneManager.GetDrone("eagle").position == BuildingManager.GetBuilding("hq").position) break;
             await WaitFor(1);
             t++;
-            if (t == 20) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Remember, to move a drone you need to use [b]drone mv <drone> <x> <y>[/b].", null); }
-            if (t == 40) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "You can see where [b]hq[/b] is located by using [b]location ls[/b].", null); }
-            if (t == 60) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Is it really that hard? [b]drone mv eagle 17 34[/b] on DroneMgr, which you can find on your desktop.", null); }
+            if (t == 30) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Remember, to move a drone you need to use [b]drone mv <drone> <x> <y>[/b].", null); }
+            if (t == 60) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "You can see where [b]hq[/b] is located by using [b]location ls[/b].", null); }
+            if (t == 90) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Is it really that hard? [b]drone mv eagle 17 34[/b] on DroneMgr, which you can find on your desktop.", null); }
         }
         await WaitFor(1);
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Now that your drone is at hq, you might want to take a look at what items we have in stock.", null);
@@ -261,9 +257,9 @@ public class Timeline: Node {
         while (true) {
             if (GameManager.ordersWindow.GetOrders().Count == 0) break;
             t++;
-            if (t == 40) { bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "HQ is complaining they haven't received their order yet. What's taking you so long?", null); }
-            if (t == 80) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Need help with the order? You need to deliver two [b]drone_part[/b]s to hq. You can find them in the new [b]drone_factory[/b] I added to your map.", null); }
-            if (t == 120) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Remember you can always refer to the manual in your [b]Files[/b] if you forgot a command.", null); }
+            if (t == 90) { bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "HQ is complaining they haven't received their order yet. What's taking you so long?", null); }
+            if (t == 120) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Need help with the order? You need to deliver two [b]drone_part[/b]s to hq. You can find them in the new [b]drone_factory[/b] I added to your map.", null); }
+            if (t == 240) { laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Remember you can always refer to the manual in your [b]Files[/b] if you forgot a command.", null); }
             await WaitFor(1);
         }
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Well done.", null);
@@ -287,8 +283,11 @@ public class Timeline: Node {
         }
         await WaitFor(5);
 
-        charlieChat.AddChatMessage(ChatMessageSide.Left, charlieName, "Alright mate, listen up. Apparently, the sales manager had a right go at our manager today. And get this, I reckon he completely forgot that we're a team of two working in this area. Can you believe it?", null);
+        charlieChat.AddChatMessage(ChatMessageSide.Left, charlieName, "Alright mate, listen up. Apparently, you can listen to some music by using the shortcut you have on the right side of the screen. Can you believe it?", null);
 
+        await WaitFor(3);
+        GameManager.filesWindow.AddPdfFile("cat_pics", ResourceLoader.Load<Texture>("res://Resources/Image/romer_pdf.png"));
+        charlieChat.AddChatMessage(ChatMessageSide.Left, charlieName, "I'm also sending you some of my cat pictures. You can find the on the Files program thingy.", null);
         // New order
         await WaitFor(30);
         bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "We have a new contract with the big corporations at the capital. You know what that means.", null);
@@ -296,7 +295,7 @@ public class Timeline: Node {
         bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "New orders coming right up.", null);
         await WaitFor(15);
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "HQ used the drone parts you brought earlier to make you a new drone. This one should be able to carry heavier items, but it's a bit slower.", null);
-        DroneManager.AddDrone(new Drone("robin", new System.Numerics.Vector2(20, 30), 0.003f, 100), "robin");
+        DroneManager.AddDrone(new Drone("robin", new System.Numerics.Vector2(20, 30), 0.006f, 100), "robin");
 
         BuildingManager.AddBuilding(new Building("country_capital", new System.Numerics.Vector2(50, 50)), "city");
         BuildingManager.GetBuilding("drone_factory").AddItem(new Item("drone_parts", 5));
@@ -324,21 +323,43 @@ public class Timeline: Node {
         await WaitFor(5);
         bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "If you don't fulfill this one on time, the future of the country might be in danger.", null);
         await WaitFor(10);
-        DroneManager.AddDrone(new Drone("heron", new System.Numerics.Vector2(70, 40), 0.01f, 200), "heron");
+        DroneManager.AddDrone(new Drone("heron", new System.Numerics.Vector2(70, 40), 0.012f, 200), "heron");
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "I've added a new drone to your fleet. Check it out.", null); ;
         await WaitFor(20);
-        laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "New items are ready at all locations. Check them out as well.", null);
-        await WaitFor(20);
+        laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "New items will be ready at all locations. Check them out as well.", null);
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Once you are ready, let me know. You'll have around 5 minutes to complete the orders.", null);
 
         laraChatResponse.SetResponses("I'm ready.", null, null);
         laraResponse = await WaitForResponse(laraChat);
+
+        EndMission();
+
+    }
+
+    private async void EndMission() {
+        var finalCountdown = GetTree().CurrentScene.GetNode<Control>("Overlays/CountDown");
+        var finalCountdownLabel = finalCountdown.GetNode<RichTextLabel>("Time");
+        var finalFx = GetTree().CurrentScene.GetNode<Control>("Overlays/FinalFx");
+
+        BuildingManager.AddBuilding(new Building("boss_house", new System.Numerics.Vector2(60, 40)), "house");
+        BuildingManager.GetBuilding("boss_house").AddItem(new Item("pillow", 5));
+        BuildingManager.GetBuilding("boss_house").AddItem(new Item("employee_tears", 150));
+        BuildingManager.GetBuilding("boss_house").AddItem(new Item("top_secret_doc", 30));
+        BuildingManager.GetBuilding("drone_factory").AddItem(new Item("components_box", 80));
+        BuildingManager.GetBuilding("drone_factory").AddItem(new Item("future_tech", 150));
+        BuildingManager.GetBuilding("cotton_factory").AddItem(new Item("candy", 10));
+        BuildingManager.GetBuilding("cotton_factory").AddItem(new Item("candy", 10));
+
+        GameManager.ordersWindow.AddOrder("country_capital", new string[] { "top_secret_doc", "future_tech", });
+        GameManager.ordersWindow.AddOrder("boss_house", new string[] { "components_box", "screws" });
+        GameManager.ordersWindow.AddOrder("hq", new string[] { "candy", "candy" });
+
         await WaitFor(5);
 
         finalFx.Visible = true;
         finalCountdown.Visible = true;
 
-        var won = false;
+        bool won;
         while (true) {
             if (GameManager.ordersWindow.GetOrders().Count == 0) { won = true; break; }
             if (GameManager.finalCountdown <= 0) { won = false; break; }
@@ -364,7 +385,7 @@ public class Timeline: Node {
             bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "You screwed up.", null);
             bossChat.AddChatMessage(ChatMessageSide.Left, bossName, "YOU'RE FIRED.", null);
         }
-        await WaitFor(5);
+        await WaitFor(3);
         laraChat.AddChatMessage(ChatMessageSide.Left, laraName, "Thank you for playing. Game created for Ludum Dare 53. Make sure to check the credits. You know where to find them ;)", null);
     }
 }

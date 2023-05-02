@@ -104,7 +104,7 @@ public static class GameManager {
             var yPadded = ((int)drone.position.Y).ToString().PadRight(3);
             var itemPadded = drone.item != null ? drone.item.name.ToString().PadRight(12) : "FREE".PadRight(12);
             var maxWeightPadded = ((int)drone.maxWeight).ToString().PadRight(11);
-            var speedPadded = ((int)drone.speed * 1000).ToString().PadRight(7);
+            var speedPadded = ((int)(drone.speed * 1000.0f)).ToString().PadRight(7);
             sshWindow.AddText("\n\t" + namePadded + xPadded + yPadded + itemPadded + maxWeightPadded + speedPadded);
         }
     }
@@ -145,6 +145,7 @@ public static class GameManager {
         }
         if (item.weight > drone.maxWeight) {
             sshWindow.AddText(MakeErrorResponse("Drone '" + droneName + "' cannot carry item '" + itemName + "' because it's too heavy. Use another drone with a higher weight capacity."));
+            droneLocation.AddItem(item);
             return;
         }
         drone.item = item;
